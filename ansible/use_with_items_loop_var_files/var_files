@@ -1,0 +1,3 @@
+users:
+  - { name: 'xuzhiqiang', uid: 5001, comment: 'xuzhiqiang for icxp', state: 'present', key: 'keys/zhiqiang.xu.pub'}
+  - { name: 'test2', uid: 5001, comment: 'xuzhiqiang for icxp', state: 'present', key: 'keys/zhiqiang.xu.pub'}

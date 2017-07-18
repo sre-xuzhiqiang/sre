@@ -1,0 +1,34 @@
+#------------------------------------------
+#这样是可以行的
+#----------------------------------------
+- name: Add users
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment }}"
+    uid: "{{ item.uid }}"
+    state: "{{ item.state }}"
+  with_items:
+    - { name: 'xuzhiqiang', uid: 5001, comment: 'xuzhiqiang for icxp', state: 'present', key: 'keys/zhiqiang.xu.pub'}
+
+#------------------------------------------
+#这样是可以行的
+#----------------------------------------
+- name: Add users
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment }}"
+    uid: "{{ item.uid }}"
+    state: "{{ item.state }}"
+  with_items: "{{ users }}"
+
+#------------------------------------------
+#这样是不行行
+#----------------------------------------
+
+- name: Add users
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment }}"
+    uid: "{{ item.uid }}"
+    state: "{{ item.state }}"
+  with_items:  users
