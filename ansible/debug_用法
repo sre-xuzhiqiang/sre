@@ -1,0 +1,68 @@
+http://qiita.com/szk3/items/29e827f90a543c764a5e
+
+#------------------------------------↲
+# debug  var 直接输出一个变量的内容
+#------------------------------------↲
+  tasks:
+    - name: exec whoami
+      shell: whoami
+      register: result
+    - name: debug result var
+      debug: var=result
+
+- name: Display all variables/facts known for a host
+  debug:
+    var: hostvars[inventory_hostname]
+
+#------------------------------------↲
+# debug  stg 输出定制的消息
+#------------------------------------↲
+■例子1
+- hosts: tag_Name_stg-*
+  tasks:
+    - action: ec2_facts
+    - name: Server Name
+      action: debug msg={{ ec2_tag_Name }}
+
+■例子２
+tasks:
+  - name : gacher elb
+    action:
+      module: ec2_elb_facts
+       region: "{{ region }}"
+       aws_access_key: "{{ access_key }}"
+       aws_secret_key: "{{ secret_key }}"
+    register: elb_facts
+
+  - name: debug
+    debug: msg={{ elb_facts }}
+
+- action:
+    module: debug
+      msg: "{{ item.dns_name }}"
+    with_items: "{{ elb_facts.elbs }}"
+
+#------------------------------------↲
+# debug  带条件
+#------------------------------------↲
+■例子1
+
+- name: Gather facts
+  ec2_facts:
+
+- name: Conditional
+  debug:
+    msg: "This instance is a t1.micro"
+  when: ansible_ec2_instance_type == "t1.micro"
+
+■例子2
+  tasks:
+    - command: ls -1 /etc/cron.daily/
+      register: ls_result
+      changed_when: False
+
+    - debug: var=ls_result.stdout
+      when: ls_result | success
+
+
+
